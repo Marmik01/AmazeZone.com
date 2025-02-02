@@ -1,0 +1,46 @@
+<%= form_with(model: transaction, local: true) do |form| %>
+  <% if transaction.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+      <ul>
+        <% transaction.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>You are purchasing the product: <strong><%= @product.name %></strong></p>
+
+  <div class="field">
+    <% qty = @product.quantity %>
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity, id: 'quantity', min: 1, max: qty, onchange: "calculateTotalPrice();" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :total_cost %>
+    <%= form.text_field :total_cost, id: 'total_cost', readonly: true %>
+  </div>
+
+  <div class="field">
+    <%= form.hidden_field :product_id, value: @product.id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :credit_card_id, "Credit Card Number" %>
+    <%= form.collection_select :credit_card_id, @credit_cards, :id, :card_number, include_blank: false %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Complete Purchase" %>
+  </div>
+
+  <script type="text/javascript">
+      function calculateTotalPrice() {
+          var price = "<%= @product.price %>";
+          document.getElementById('total_cost').value = document.getElementById('quantity').value * price;
+      }
+  </script>
+
+<% end %>

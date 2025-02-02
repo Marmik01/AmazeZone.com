@@ -1,0 +1,36 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Transactions" %>
+
+<h1>Purchase History</h1>
+
+<% if @transactions.any? %>
+  <table>
+    <thead>
+    <tr>
+      <th>Transaction Number</th>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Total Cost</th>
+      <th>Purchased On</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @transactions.each do |transaction| %>
+      <tr>
+        <td><%= transaction.transaction_number %></td>
+        <td><%= transaction.product.name %></td>
+        <td><%= transaction.quantity %></td>
+        <td><%= number_to_currency(transaction.total_cost) %></td>
+        <td><%= transaction.created_at.strftime("%B %d, %Y") %></td>
+        <td><%= link_to "Show", transaction %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>You have not made any purchases yet.</p>
+<% end %>
+
+<%# Removed: <%= link_to "New transaction", new_transaction_path %> %>

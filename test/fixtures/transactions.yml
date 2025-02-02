@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  transaction_number: 1
+  quantity: 1
+  total_cost: 9.99
+  user: one
+  product: one
+  credit_card: one
+
+two:
+  transaction_number: 1
+  quantity: 1
+  total_cost: 9.99
+  user: two
+  product: two
+  credit_card: two
